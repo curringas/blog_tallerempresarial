@@ -15,7 +15,7 @@ class PostController extends Controller
     }
 
     public function show($post, Request $request)
-    {
+    {   
         if($post){
             $post=Post::find($post);
             $user = $request->user();
@@ -25,12 +25,21 @@ class PostController extends Controller
         }
     }
 
-    public function edit($post=null)
+    public function edit($id=null)
     {
-        if($post){
-            $post=Post::find($post);
+        //dd($id);
+        if($id!=null){
+            $post=Post::find($id);
+            $title = 'Editar Post';
+            $subtitle = 'Aqui puedes modificar este artículo';
+            $route = "posts.update";
+        }else{
+            $post = null;
+            $title = 'Crear Post';
+            $subtitle = 'Aqui puedes crear un nuevo artículo';
+            $route = 'posts.save';
         }
-        return view('posts.edit',compact('post'));
+        return view('posts.edit',compact('post','title','subtitle','route'));
     }
 
     public function save(Request $request)
@@ -42,5 +51,16 @@ class PostController extends Controller
         $post->published_at = now();
         $post->save();
         return redirect()->route('dashboard');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $post = new Post();
+        $post->find($id);
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->category = $request->category;
+        $post->update();
+        return redirect()->route('posts/{$id}');
     }
 }

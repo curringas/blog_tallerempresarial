@@ -1,7 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Nuevo post') }}
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __($title) }}
         </h2>
     </x-slot>
 
@@ -13,11 +12,11 @@
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-gray-900">
-                                {{ __('Crea tu nuevo post') }}
+                                {{ __($subtitle) }}
                             </h2>
                         </header>
                     
-                        <form method="post" action="{{ route('posts.save') }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route($route) }}" class="mt-6 space-y-6">
                             @csrf
     
                             <div>

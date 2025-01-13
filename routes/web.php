@@ -17,8 +17,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.view');
     Route::get('/post/create', [PostController::class, 'edit'])->name('posts.create');
+    Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.view');
     Route::get('/post/edit/{post}', [PostController::class, 'edit'])->name('posts.edit');
     Route::post('/post/save', [PostController::class, 'save'])->name('posts.save');
     Route::post('/post/update', [PostController::class, 'update'])->name('posts.update');

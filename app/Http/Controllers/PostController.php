@@ -53,14 +53,20 @@ class PostController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $post = new Post();
-        $post->find($id);
-        $post->title = $request->title;
-        $post->content = $request->content;
-        $post->category = $request->category;
-        $post->update();
-        return redirect()->route('posts/{$id}');
+        $post=Post::find($request->id);
+        if (!$request->id) {
+            return redirect()->route('dashboard');
+        }else{
+            //$post = new Post();
+            //$post->where('id',$request->id)->get();
+            //dd($request->id);
+            $post->title = $request->title;
+            $post->content = $request->content;
+            $post->category = $request->category;
+            $post->update();
+            return redirect()->route('posts.view',['post'=>$request->id]);
+        }
     }
 }

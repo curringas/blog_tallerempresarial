@@ -18,6 +18,8 @@
                     
                         <form method="post" action="{{ route($route) }}" class="mt-6 space-y-6">
                             @csrf
+
+                            <x-text-input id="update_id" name="id"  value="{{ $post->id ?? ''}}" type="hidden" class="mt-1 block w-full" />
     
                             <div>
                                 <x-input-label for="update_title" :value="__('Título')" />

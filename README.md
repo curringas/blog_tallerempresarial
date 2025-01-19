@@ -7,6 +7,15 @@
 7. ejecuta php artisan migrate
 8. php artisan migrate:fresh --seed
 9. ejecuta php artisan serve y navega a tu localhost
+
+    Todos los usuario que se creen tendran permisos de usuario
+   
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Para logearse puede usar:
+   ADMINISTRADOR:  administrator@example.com | 1234
+   USUARIO: user@example.com | 1234
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
 -- Si hay problemas depues de esto con el archivo manifest.json
    1. npm run build
    2. npm install

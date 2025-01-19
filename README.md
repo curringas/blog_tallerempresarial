@@ -1,3 +1,26 @@
+1. Clona el proyecto
+2. composer install
+3. npm install
+4. Crea la db blog_tallerempresarial
+5. crea .env a partir de .env.
+6. php artisan key:generate
+7. ejecuta php artisan migrate
+8. php artisan migrate:fresh --seed
+9. ejecuta php artisan serve y navega a tu localhost
+
+    Todos los usuario que se creen tendran permisos de usuario
+   
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Para logearse puede usar:
+   ADMINISTRADOR:  administrator@example.com | 1234
+   USUARIO: user@example.com | 1234
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+-- Si hay problemas depues de esto con el archivo manifest.json
+   1. npm run build
+   2. npm install
+   3. Limpia cache npm si es necesario
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

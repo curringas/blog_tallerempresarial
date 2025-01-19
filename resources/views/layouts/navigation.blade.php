@@ -15,9 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Blog') }}
                     </x-nav-link>
+                    @if (Auth::user()->profile == "administrator")
                     <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
                         {{ __('Crear nuevo') }}
                     </x-nav-link>
+                    @endif
                 </div>
             </div>
 

@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $posts=Post::orderBy('created_at', 'desc')->get();
+        $posts=Post::orderBy('created_at', 'desc')->paginate(3);
         $user = $request->user();
         return view('posts.index', compact('posts','user'));
     }
@@ -42,7 +42,7 @@ class PostController extends Controller
         return view('posts.edit',compact('post','title','subtitle','route'));
     }
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $post = new Post();
         $post->title = $request->title;
@@ -59,14 +59,18 @@ class PostController extends Controller
         if (!$request->id) {
             return redirect()->route('dashboard');
         }else{
-            //$post = new Post();
-            //$post->where('id',$request->id)->get();
-            //dd($request->id);
             $post->title = $request->title;
             $post->content = $request->content;
             $post->category = $request->category;
             $post->update();
             return redirect()->route('posts.view',['post'=>$request->id]);
         }
+    }
+
+    public function destroy($id)
+    {
+        $post=Post::find($id);
+        $post->delete();
+        return redirect()->route('dashboard');
     }
 }

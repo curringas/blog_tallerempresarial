@@ -13,7 +13,16 @@
                         <p class="mt-2 text-gray-600">{{ $post->content }}</p>
                         <p class="mt-2">[<a href="{{ route("dashboard")}}">Volver a la lista</a>]</p>
                         @if ($user->profile == "administrator")
-                            <p class="mt-2">[<a href="{{ route("posts.edit",["post"=>$post->id])}}">Editar</a>]</p>
+                            <p class="mt-2">
+                                <form method="post" action="{{ route("posts.destroy",["post"=>$post->id])}}">
+                                    @csrf
+                                    @method("delete")
+                                    <a href="{{ route("posts.edit",["post"=>$post->id])}}">
+                                        <x-primary-button type="button">Editar</x-primary-button>
+                                    </a>
+                                    <x-secondary-button type="submit">Eliminar</x-secondary-button>
+                                </form>
+                            </p>
                         @endif
                 </div>
         </div>

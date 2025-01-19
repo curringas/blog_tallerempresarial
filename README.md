@@ -5,7 +5,8 @@
 5. crea .env a partir de .env.
 6. php artisan key:generate
 7. ejecuta php artisan migrate
-8. ejecuta php artisan serve y navega a tu localhost
+8. php artisan migrate:fresh --seed
+9. ejecuta php artisan serve y navega a tu localhost
 -- Si hay problemas depues de esto con el archivo manifest.json
    1. npm run build
    2. npm install

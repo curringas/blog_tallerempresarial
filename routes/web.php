@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('post', PostController::class)->names('posts')->parameter('post','id')->middleware('auth');
+Route::resource('post', PostController::class)->names('posts')->middleware('auth');
 /* Esto es lo mismo que la linea anterior
 se usa siempre la ruta con 'post' pero con el name 'posts' y el parametro 'id' en lugar de 'post'
 si no se definie arriva names y parameter pues se usa por defecto 'post' que es el nombre del recurso 

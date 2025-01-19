@@ -18,12 +18,12 @@ class Post extends Model
             'is_active' => 'boolean',
         ];
     }
-    protected function title(): Attribute
+    /*protected function title(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => ucfirst($value),
         );
-    }
+    }*/
 
     public function getDesdeAttribute(): string
     {
@@ -36,5 +36,10 @@ class Post extends Model
     {
         // Devuelve los primeros 100 caracteres de 'content', o todo el contenido si tiene menos de 100 caracteres
         return substr($this->content, 0, 200).'...';
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

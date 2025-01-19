@@ -16,15 +16,20 @@
                             </h2>
                         </header>
                     
-                        <form method="post" action="{{ route($route,$id) }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route($route,$post) }}" class="mt-6 space-y-6">
                             @csrf
-                            @if ($id)
+                            @if ($post)
                                 @method("put") {{--Modificando--}}
                             @endif
     
                             <div>
                                 <x-input-label for="update_title" :value="__('Título')" />
                                 <x-text-input id="update_title" name="title" value="{{ $post->title ?? ''}}" type="text" class="mt-1 block w-full" />
+                            </div>
+    
+                            <div>
+                                <x-input-label for="update_slug" :value="__('Slug')" />
+                                <x-text-input id="update_slug" name="slug" value="{{ $post->slug ?? ''}}" type="text" class="mt-1 block w-full" />
                             </div>
                     
                             <div>

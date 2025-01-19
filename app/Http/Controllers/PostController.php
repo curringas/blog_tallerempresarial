@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    //**********************************************************
+    //  *** CRUD ****
+    //********************************************************** 
     public function index(Request $request)
     {
         $posts=Post::orderBy('created_at', 'desc')->paginate(3);
@@ -14,10 +18,10 @@ class PostController extends Controller
         return view('posts.index', compact('posts','user'));
     }
 
-    public function show($post, Request $request)
+    public function show($id, Request $request)
     {   
-        if($post){
-            $post=Post::find($post);
+        if($id){
+            $post=Post::find($id);
             $user = $request->user();
             return view('posts.show',compact('post','user'));
         }else{
@@ -25,25 +29,42 @@ class PostController extends Controller
         }
     }
 
-    public function edit($id=null)
+    public function create(Request $request)
     {
-        //dd($id);
-        if($id!=null){
-            $post=Post::find($id);
-            $title = 'Editar Post';
-            $subtitle = 'Aqui puedes modificar este artículo';
-            $route = "posts.update";
-        }else{
-            $post = null;
-            $title = 'Crear Post';
-            $subtitle = 'Aqui puedes crear un nuevo artículo';
-            $route = 'posts.save';
+        $user=$request->user();
+        //dd($user->profile);
+        if ($user->profile!="administrator"){
+            return redirect()->route('dashboard');
         }
-        return view('posts.edit',compact('post','title','subtitle','route'));
+        //Definimos las variables para mandar al formulario de editar que seral el mismo que crear
+        $id=null;
+        $post = null;
+        $title = 'Crear Post';
+        $subtitle = 'Aqui puedes crear un nuevo artículo';
+        $route = 'posts.store';
+        return view('posts.edit',compact('id','post','title','subtitle','route'));
+    }
+
+    public function edit($id, Request $request)
+    {
+        $user=$request->user();
+        if ($user->profile!="administrator"){
+            return redirect()->route('dashboard');
+        }
+        //Definimos las variables para mandar al formulario de editar que seral el mismo que crear
+        $post=Post::find($id);
+        $title = 'Editar Post';
+        $subtitle = 'Aqui puedes modificar este artículo';
+        $route = "posts.update";
+        return view('posts.edit',compact('id','post','title','subtitle','route'));
     }
 
     public function store(Request $request)
     {
+        $user=$request->user();
+        if ($user->profile!="administrator"){
+            return redirect()->route('dashboard');
+        }
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
@@ -53,9 +74,13 @@ class PostController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $post=Post::find($request->id);
+        $user=$request->user();
+        if ($user->profile!="administrator"){
+            return redirect()->route('dashboard');
+        }
+        $post=Post::find($id);
         if (!$request->id) {
             return redirect()->route('dashboard');
         }else{
@@ -63,12 +88,16 @@ class PostController extends Controller
             $post->content = $request->content;
             $post->category = $request->category;
             $post->update();
-            return redirect()->route('posts.view',['post'=>$request->id]);
+            return redirect()->route('posts.show',$id);
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        $user=$request->user();
+        if ($user->profile!="administrator"){
+            return redirect()->route('dashboard');
+        }
         $post=Post::find($id);
         $post->delete();
         return redirect()->route('dashboard');

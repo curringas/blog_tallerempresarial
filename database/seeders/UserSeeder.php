@@ -22,10 +22,10 @@ class UserSeeder extends Seeder
         $user->save();
 
         $user = new User();
-        $user->name = 'Usuario';
+        $user->name = 'Federico García Lorca';
         $user->email = 'usuario@example.com';
         $user->password = bcrypt('1234');
-        $user->profile = 'user';
+        $user->profile = 'lector';
         
         $user->save();
 

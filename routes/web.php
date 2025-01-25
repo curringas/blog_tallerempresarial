@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/post/{id}', [PostController::class, 'update'])->name('posts.update'); // Update
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });*/
+
+Route::resource('user', UserController::class)->parameter('user', 'lector')->names('users')->middleware('auth');
+
 
 require __DIR__.'/auth.php';

@@ -1,8 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Listado de posts') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Listado de posts') }}
+            </h2>
+            @if (Auth::user()->profile == "administrator")
+                <x-primary-button class="">
+                    <a href="{{ route("posts.create") }}">+ AÑADIR NUEVO</a>
+                </x-primary-button>
+            @endif
+        </div>
     </x-slot>
 
     <div class="py-12">

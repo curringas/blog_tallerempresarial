@@ -16,8 +16,8 @@
                         {{ __('Blog') }}
                     </x-nav-link>
                     @if (Auth::user()->profile == "administrator")
-                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
-                        {{ __('Crear nuevo') }}
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Lectores') }}
                     </x-nav-link>
                     @endif
                 </div>

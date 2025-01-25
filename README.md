@@ -2,7 +2,7 @@
 2. composer install
 3. npm install
 4. Crea la db blog_tallerempresarial
-5. crea .env a partir de .env.
+5. crea .env a partir de .env. y cambia APP_LOCALE a "es"
 6. php artisan key:generate
 7. ejecuta php artisan migrate
 8. php artisan migrate:fresh --seed

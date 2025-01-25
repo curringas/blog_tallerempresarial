@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('post', PostController::class)->names('posts')->middleware('auth');
+
 /* Esto es lo mismo que la linea anterior
 se usa siempre la ruta con 'post' pero con el name 'posts' y el parametro 'id' en lugar de 'post'
 si no se definie arriva names y parameter pues se usa por defecto 'post' que es el nombre del recurso 
@@ -33,6 +36,9 @@ Route::middleware('auth')->group(function () {
 });*/
 
 Route::resource('user', UserController::class)->parameter('user', 'lector')->names('users')->middleware('auth');
+
+//con esta si respetamos el plural el slug de la url y el mismo name en plural y la veriable en sigular podemos dejar todas las rutas en esto
+Route::resource('categories', CategoryController::class)->middleware('auth');
 
 
 require __DIR__.'/auth.php';

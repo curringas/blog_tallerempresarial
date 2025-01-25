@@ -46,7 +46,7 @@
                             <div>
                                 <x-input-label for="update_description" :value="__('Descripción de la categoría')" />
                                 <x-textarea id="update_description" name="description" type="text" class="mt-1 block w-full">
-                                    {{ $category->description ?? ''}}
+                                    {{ $category->description ?? old('description')}}
                                 </x-textarea>
                             </div>
                     

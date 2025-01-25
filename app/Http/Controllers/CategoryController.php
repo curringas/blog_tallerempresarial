@@ -77,9 +77,12 @@ class CategoryController extends Controller
         ]);
 
         // Si la validación pasa, puedes guardar el usuario
-        Category::create([
+        Category::create($validatedData);
+        /*Category::create([
             'name' => $validatedData['name'],
-        ]);
+            'slug' => $validatedData['slug'],
+            'description' => $validatedData['slug'],
+        ]);*/
 
         // Redirigir o devolver una respuesta
         return redirect()->route('categories.index')->with('success', 'Categoría creada con éxito!');
@@ -108,10 +111,11 @@ class CategoryController extends Controller
             return redirect()->route('dashboard');
         }else{
 
-            $category->name = $validatedData['name'];
+            $category->update($validatedData);
+            /*$category->name = $validatedData['name'];
             $category->slug = $validatedData['slug'];
             $category->description = $validatedData['description'] ?? $category->description; 
-            $category->save();
+            $category->save();*/
             return redirect()->route('categories.index')->with('success', 'Categoría actualizada con éxito!');
         }
     }

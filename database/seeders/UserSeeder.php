@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
         $user->email = 'administrador@example.com';
         $user->password = bcrypt('1234');
         $user->profile = 'administrator';
-        
         $user->save();
 
         $user = new User();
@@ -26,19 +25,20 @@ class UserSeeder extends Seeder
         $user->email = 'usuario@example.com';
         $user->password = bcrypt('12345678');
         $user->profile = 'lector';
+        $user->save();
 
         $user = new User();
         $user->name = 'Camilo Jose Cela';
         $user->email = 'camilo@example.com';
         $user->password = bcrypt('12345678');
         $user->profile = 'lector';
+        $user->save();
 
         $user = new User();
         $user->name = 'Simon Bolivar';
         $user->email = 'simon@example.com';
         $user->password = bcrypt('12345678');
         $user->profile = 'lector';
-        
         $user->save();
 
         //User::factory(10)->create();

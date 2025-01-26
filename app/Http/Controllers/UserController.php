@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserCreateMail;
 
 class UserController extends Controller
 {
@@ -12,7 +14,7 @@ class UserController extends Controller
     //********************************************************** 
     public function index(Request $request)
     {
-        $lectores=User::where('profile','lector')->orderBy('created_at', 'desc')->paginate(3);
+        $lectores=User::where('profile','lector')->orderBy('created_at', 'desc')->paginate(10);
         $user = $request->user();
         return view('users.index', compact('lectores','user'));
     }
@@ -75,15 +77,17 @@ class UserController extends Controller
         ]);
 
         // Si la validación pasa, puedes guardar el usuario
-        User::create([
+        $lector=User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'telephone' => $validatedData['email'] ?? null,
             'password' => bcrypt($validatedData['password']),
         ]);
 
+        Mail::to($validatedData['email'])->send(new UserCreateMail($lector));
+
         // Redirigir o devolver una respuesta
-        return redirect()->route('users.index')->with('success', 'Usuario creado con éxito!');
+        return redirect()->route('users.index')->with('success', 'Usuario creado con éxito!. Se envió un correo de bienvenida');
 
 
         /*$lector = new User();
@@ -121,7 +125,7 @@ class UserController extends Controller
             if ($request->filled('password')) {
                 $lector->password = bcrypt($validatedData['password']);  // Solo se actualiza si se proporciona una nueva contraseña
             }
-            $user->save();
+            $lector->save();
             return redirect()->route('users.index')->with('success', 'Usuario actualizado con éxito!');
             /*$lector->name = $request->name;
             $lector->email = $request->email;

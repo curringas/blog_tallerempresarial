@@ -41,6 +41,19 @@
                                     <x-secondary-button type="submit">Eliminar</x-secondary-button>
                                 </form>
                             </p>
+                            @else
+                                <p class="mt-2">
+                                @if (count($megusta))
+                                    <a href="{{ route("likes.destroy",$megusta)}}">
+                                        <x-like-button type="button">Me Gusta</x-like-button>
+                                    </a>       
+
+                                @else
+                                    <a href="{{ route("likes.store",$post)}}">
+                                        <x-secondary-button type="button">¿Te gusta?</x-like-button>
+                                    </a>
+                                @endif
+                                </p>
                         @endif
                         </div>
                     </div>

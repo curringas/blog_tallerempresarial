@@ -18,6 +18,16 @@ class Post extends Model
             'is_active' => 'boolean',
         ];
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
     /*protected function title(): Attribute
     {
         return Attribute::make(
@@ -28,7 +38,7 @@ class Post extends Model
     public function getDesdeAttribute(): string
     {
         // Devuelve los primeros 100 caracteres de 'content', o todo el contenido si tiene menos de 100 caracteres
-        return $this->created_at->diffForHumans();
+        return ucfirst($this->created_at->diffForHumans());
     }
 
 
@@ -36,10 +46,5 @@ class Post extends Model
     {
         // Devuelve los primeros 100 caracteres de 'content', o todo el contenido si tiene menos de 100 caracteres
         return substr($this->content, 0, 200).'...';
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 }

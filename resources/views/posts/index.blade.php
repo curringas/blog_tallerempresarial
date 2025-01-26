@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Listado de posts') }}
+                {{ __('Blog') }}
             </h2>
             @if (Auth::user()->profile == "administrator")
                 <x-primary-button class="">
@@ -17,12 +17,12 @@
             @foreach ($posts as $post)
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <h2 class="text-2xl font-semibold text-gray-800"><a href="{{ route("posts.show",$post)}}">{{ $post->title }}</a></h2>
-                        <p class="mt-2 text-gray-600">{{ $post->desde }} | {{ $post->category}}</p>
-                        <p class="mt-2 text-gray-600">{{ $post->resumen }}</p>
-                        <p class="mt-2">[<a href="{{ route("posts.show",$post)}}">Seguir leyendo</a>]</p>
-                        @if ($user->profile == "administrator")
+                        <p class="mt-2 text-gray-600">{{ $post->desde }} | {{ $post->category}} | {{ count($post->likes) }} me gusta</p>
+                        <p class="mt-2 text-gray-600">{{ $post->resumen }} 
+                         <a href="{{ route("posts.show",$post)}}">Leer más</a></p>
+                        {{--@if ($user->profile == "administrator")
                             <p class="mt-2">[<a href="{{ route("posts.edit",$post)}}">Editar</a>]</p>
-                        @endif
+                        @endif--}}
                 </div>
             @endforeach
             {{$posts->links()}}

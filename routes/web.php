@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LikeController;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -14,13 +15,19 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/like/{post}', [LikeController::class, 'store'])->name('likes.store');
+Route::get('/dislike/{like}', [LikeController::class, 'destroy'])->name('likes.destroy');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 Route::resource('post', PostController::class)->names('posts')->middleware('auth');
+
 
 /* Esto es lo mismo que la linea anterior
 se usa siempre la ruta con 'post' pero con el name 'posts' y el parametro 'id' en lugar de 'post'

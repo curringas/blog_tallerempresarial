@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Like;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -23,7 +24,10 @@ class PostController extends Controller
         if($post){
             //$post=Post::find($id);
             $user = $request->user();
-            return view('posts.show',compact('post','user'));
+            $megusta= Like::where("user_id",$user->id)
+                        ->where("post_id",$post->id)
+                        ->get();
+            return view('posts.show',compact('post','user','megusta'));
         }else{
             return redirect()->route('dashboard');
         }

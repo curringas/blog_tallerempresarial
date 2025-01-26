@@ -30,22 +30,29 @@
                             @endif
     
                             <div>
-                                <x-input-label for="update_title" :value="__('Título')" />
+                                <x-input-label for="update_title" :value="__('Título')"  :required=true />
                                 <x-text-input id="update_title" name="title" value="{{ $post->title ?? ''}}" type="text" class="mt-1 block w-full" />
                             </div>
     
                             <div>
-                                <x-input-label for="update_slug" :value="__('Slug')" />
+                                <x-input-label for="update_slug" :value="__('Slug')"  :required=true />
                                 <x-text-input id="update_slug" name="slug" value="{{ $post->slug ?? ''}}" type="text" class="mt-1 block w-full" />
                             </div>
                     
                             <div>
-                                <x-input-label for="update_category" :value="__('Categoría')" />
-                                <x-text-input id="update_category" name="category"  value="{{ $post->category ?? ''}}" type="text" class="mt-1 block w-full" />
+                                <x-input-label for="update_category" :value="__('Categoría')" :required=true />
+                                <x-select id="update_category" name="category" class="mt-1 block w-full">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" 
+                                            @if ($post->category->id==$category->id) 
+                                                @selected(true)
+                                            @endif>{{ $category->name }}</option>
+                                    @endforeach
+                                </x-select>
                             </div>
                     
                             <div>
-                                <x-input-label for="update_content" :value="__('Contenido del post')" />
+                                <x-input-label for="update_content" :value="__('Contenido del post')"  :required=true />
                                 <x-textarea id="update_content" name="content" type="text" class="mt-1 block w-full">
                                     {{ $post->content ?? ''}}
                                 </x-textarea>

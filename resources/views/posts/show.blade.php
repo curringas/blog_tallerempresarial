@@ -17,7 +17,7 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <h2 class="text-2xl font-semibold text-gray-800"><a href="">{{ $post->title }}</a></h2>
-                            <p class="mt-2 text-gray-600">{{ $post->created_at->format("d/m/Y")." | ".$post->category }}</p>
+                            <p class="mt-2 text-gray-600">{{ $post->created_at->format("d/m/Y")." | ".$post->category->name }}</p>
                         </div>
                         <div>
                             @if ($user->profile == "administrator")

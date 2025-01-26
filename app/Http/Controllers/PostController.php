@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Like;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -47,7 +48,8 @@ class PostController extends Controller
         $title = 'Crear Post';
         $subtitle = 'Aqui puedes crear un nuevo artículo';
         $route = 'posts.store';
-        return view('posts.edit',compact('id','post','title','subtitle','route'));
+        $categories = Category::orderBy("name")->get();
+        return view('posts.edit',compact('id','post','title','subtitle','route','categories'));
     }
 
     public function edit(Post $post, Request $request)
@@ -61,7 +63,8 @@ class PostController extends Controller
         $title = 'Editar Post';
         $subtitle = 'Aqui puedes modificar este artículo';
         $route = "posts.update";
-        return view('posts.edit',compact('post','title','subtitle','route'));
+        $categories = Category::orderBy("name")->get();
+        return view('posts.edit',compact('post','title','subtitle','route','categories'));
     }
 
     public function store(Request $request)

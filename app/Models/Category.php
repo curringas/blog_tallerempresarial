@@ -13,6 +13,11 @@ class Category extends Model
     //y asi se protege el id y no se puede modificar o otros campos que no se quieran modificar
     //y esten definidos en la bd con un valor por defecto
     
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    
     public function getResumenAttribute(): string
     {
         // Devuelve los primeros 100 caracteres de 'content', o todo el contenido si tiene menos de 100 caracteres

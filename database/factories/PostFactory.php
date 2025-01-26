@@ -20,7 +20,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(),
             'slug' => fake()->slug(),
             'content' => fake()->text(1000),
-            'category' => fake()->word(),
+            'category_id' => fake()->numberBetween(1, 3),
             'published_at' => fake()->dateTime(),
         ];
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('content');
-            $table->string('category');
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->dateTime('published_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

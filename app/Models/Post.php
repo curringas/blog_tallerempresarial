@@ -28,6 +28,11 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
     /*protected function title(): Attribute
     {
         return Attribute::make(

@@ -16,13 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        Post::factory(100)->create();
         $this->call([
             UserSeeder::class,
             CategorySeeder::class,
         ]);
-
+        Post::factory(100)->create();
         //User::factory(10)->create(); esto ya se puede hacen dentro de UserSeeder asi podemos controlar los datos que se insertan
 
     }

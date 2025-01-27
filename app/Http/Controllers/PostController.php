@@ -17,7 +17,23 @@ class PostController extends Controller
     {
         $posts=Post::orderBy('created_at', 'desc')->paginate(3);
         $user = $request->user();
-        return view('posts.index', compact('posts','user'));
+        $subtitle ="Todos los artículos";
+        $liked = false;
+        return view('posts.index', compact('posts','user','subtitle','liked'));
+    }
+
+    public function liked(Request $request)
+    {
+        $user = $request->user();
+        $posts = Post::
+            join('likes', 'likes.post_id', '=', 'posts.id')
+                ->where('likes.user_id', '=', $user->id)
+                ->orderBy('posts.created_at', 'desc')->paginate(3);
+
+        //$posts=Post::orderBy('created_at', 'desc')->paginate(3);
+        $subtitle ="Mis artículos favoritos";
+        $liked = true;
+        return view('posts.index', compact('posts','user','subtitle','liked'));
     }
 
     public function show(Post $post, Request $request)
@@ -74,14 +90,26 @@ class PostController extends Controller
         if ($user->profile!="administrator"){
             return redirect()->route('dashboard');
         }
-        $post = new Post();
+        // Validación para la actualización
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => ['required','string','max:255',
+                        'unique:categories,slug',  // Valida que el slug sea único en la tabla "categories"
+                        'regex:/^[a-z0-9-]+$/',  // Valida que el slug solo tenga minúsculas, números y guiones
+                        ],
+            'category_id' => 'required|exists:categories,id',  // Valida que la categoría exista en la tabla "categories"
+            'content' => 'required|string',  // Validación para la descripción (opcional)
+        ]);
+
+        Post::create($validatedData);
+        /*$post = new Post();
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->content = $request->content;
         $post->category = $request->category;
         $post->published_at = now();
-        $post->save();
-        return redirect()->route('dashboard');
+        $post->save();*/
+        return redirect()->route('dashboard')->with('success', 'Nuevo artículo creado con éxito!');;
     }
 
     public function update(Request $request, Post $post)
@@ -90,16 +118,29 @@ class PostController extends Controller
         if ($user->profile!="administrator"){
             return redirect()->route('dashboard');
         }
+        //dd($request);
+        // Validación para la actualización
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => ['required','string','max:255',
+                        'unique:categories,slug,'. $post->id,  // Valida que el slug sea único en la tabla "categories"
+                        'regex:/^[a-z0-9-]+$/',  // Valida que el slug solo tenga minúsculas, números y guiones
+                        ],
+            'category_id' => 'required|exists:categories,id',  // Valida que la categoría exista en la tabla "categories"
+            'content' => 'required|string',  // Validación para la descripción (opcional)
+        ]);
+
         //$post=Post::find($id);
         if (!$post) {
             return redirect()->route('dashboard');
         }else{
-            $post->title = $request->title;
-            $post->slug = $request->slug;
-            $post->content = $request->content;
-            $post->category = $request->category;
-            $post->update();
-            return redirect()->route('posts.show',$post);
+            $post->update($validatedData);
+            //$post->title = $request->title;
+            //$post->slug = $request->slug;
+            //$post->content = $request->content;
+            //$post->category_id = $request->category_id;
+            //$post->update();
+            return redirect()->route('posts.show',$post)->with('success', 'Artículo modificado con éxito!');
         }
     }
 

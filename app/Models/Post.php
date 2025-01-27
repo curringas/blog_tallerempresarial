@@ -11,6 +11,8 @@ class Post extends Model
     //
     use HasFactory;
 
+    protected $fillable = ['title', 'slug', 'content', 'category_id', 'published_at'];
+
     protected function cast(): array
     {
         return [

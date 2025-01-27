@@ -31,24 +31,33 @@
     
                             <div>
                                 <x-input-label for="update_title" :value="__('Título')"  :required=true />
-                                <x-text-input id="update_title" name="title" value="{{ $post->title ?? ''}}" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="update_title" name="title" value="{{ $post->title ?? old('title')}}" type="text" class="mt-1 block w-full" />
+                                <x-input-error :messages="$errors->get('title')" class="mt-2" />
                             </div>
     
                             <div>
                                 <x-input-label for="update_slug" :value="__('Slug')"  :required=true />
-                                <x-text-input id="update_slug" name="slug" value="{{ $post->slug ?? ''}}" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="update_slug" name="slug" value="{{ $post->slug ?? old('slug')}}" type="text" class="mt-1 block w-full" />
+                                <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                             </div>
                     
                             <div>
                                 <x-input-label for="update_category" :value="__('Categoría')" :required=true />
-                                <x-select id="update_category" name="category" class="mt-1 block w-full">
+                                <x-select id="update_category" name="category_id" class="mt-1 block w-full">
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}" 
-                                            @if ($post->category->id==$category->id) 
-                                                @selected(true)
-                                            @endif>{{ $category->name }}</option>
+                                            @if ($post)
+                                                @if ($post->category->id==$category->id) 
+                                                    @selected(true)
+                                                @elseif (old('category_id')==$category->id)
+                                                    @selected(true)
+                                                @endif
+                                            @endif
+                                            >{{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </x-select>
+                                <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                             </div>
                     
                             <div>
@@ -56,6 +65,7 @@
                                 <x-textarea id="update_content" name="content" type="text" class="mt-1 block w-full">
                                     {{ $post->content ?? ''}}
                                 </x-textarea>
+                                <x-input-error :messages="$errors->get('content')" class="mt-2" />
                             </div>
                     
                             <div class="flex items-center gap-4">

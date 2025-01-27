@@ -11,9 +11,29 @@
             @endif
         </div>
     </x-slot>
-
+    <!-- Mostrar mensaje de éxito si existe -->
+    @if (session('success'))
+        <div class="px-4 py-3 mb-4 bg-green-100 border border-green-300 text-green-800 rounded-lg">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ $subtitle}}
+                </h2>
+
+                @if (count($user->likes) && !$liked)
+                    <a href="{{ route("posts.liked")}}">
+                        <x-like-button type="button">Mis articulos favoritos</x-like-button>
+                    </a>                                        
+                @elseif ($liked)
+                    <a href="{{ route("dashboard")}}">
+                        <x-secondary-button type="button">Ver todos</x-like-button>
+                    </a>
+                @endif
+            </div>
             @foreach ($posts as $post)
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <h2 class="text-2xl font-semibold text-gray-800"><a href="{{ route("posts.show",$post)}}">{{ $post->title }}</a></h2>

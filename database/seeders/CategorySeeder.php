@@ -30,5 +30,11 @@ class CategorySeeder extends Seeder
         $category->description = 'Articulos relacionados con el mundo del deporte';
         $category->slug="deportes";
         $category->save();
+
+        $category = new Category();
+        $category->name = 'Otros';
+        $category->description = 'Aticulos que no encajan en las otras categorias';
+        $category->slug="otros";
+        $category->save();
     }
 }

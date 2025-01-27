@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('post', PostController::class)->names('posts')->middleware('auth');
-
+Route::get('posts/liked', [PostController::class, 'liked'])->name('posts.liked')->middleware('auth');
 
 /* Esto es lo mismo que la linea anterior
 se usa siempre la ruta con 'post' pero con el name 'posts' y el parametro 'id' en lugar de 'post'

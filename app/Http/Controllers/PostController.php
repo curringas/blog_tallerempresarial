@@ -15,11 +15,18 @@ class PostController extends Controller
     //********************************************************** 
     public function index(Request $request)
     {
-        $posts=Post::orderBy('created_at', 'desc')->paginate(3);
+        //
+        if ($request->category_id){
+            $posts=Post::where('category_id',$request->category_id)->orderBy('created_at', 'desc')->paginate(3);
+        }else{
+            $posts=Post::orderBy('created_at', 'desc')->paginate(3);
+        }
         $user = $request->user();
         $subtitle ="Todos los artículos";
         $liked = false;
-        return view('posts.index', compact('posts','user','subtitle','liked'));
+        $categories = Category::orderBy("name")->get();
+        $category_id = $request->category_id;
+        return view('posts.index', compact('posts','user','subtitle','liked','categories','category_id'));
     }
 
     public function liked(Request $request)

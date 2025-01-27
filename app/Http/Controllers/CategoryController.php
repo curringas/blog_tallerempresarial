@@ -91,7 +91,6 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        //dd($lector);
         $user=$request->user();
         if ($user->profile!="administrator"){
             return redirect()->route('dashboard');

@@ -13,7 +13,7 @@
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Para logearse puede usar:
    ADMINISTRADOR:  administrator@example.com | 1234
-   USUARIO: usuario@example.com | 1234
+   USUARIO: camilo@example.com | 12345678
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
 -- Si hay problemas depues de esto con el archivo manifest.json
